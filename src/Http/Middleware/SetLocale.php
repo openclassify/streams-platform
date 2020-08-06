@@ -59,18 +59,19 @@ class SetLocale
         Locale $locale,
         Redirector $redirect,
         Application $application
-    ) {
-        $this->app         = $app;
-        $this->locale      = $locale;
-        $this->redirect    = $redirect;
+    )
+    {
+        $this->app = $app;
+        $this->locale = $locale;
+        $this->redirect = $redirect;
         $this->application = $application;
     }
 
     /**
      * Look for locale=LOCALE in the query string.
      *
-     * @param  Request $request
-     * @param  \Closure $next
+     * @param Request $request
+     * @param \Closure $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
@@ -86,7 +87,7 @@ class SetLocale
                 $request->session()->remove('_locale');
             }
 
-            return $this->redirect->back();
+            return ($request->has('redirect')) ? $this->redirect->to($request->get('redirect')) : $this->redirect->back();
         }
 
         if ($locale = $request->session()->get('_locale')) {
