@@ -8,6 +8,7 @@ use Assetic\Asset\GlobAsset;
 use Collective\Html\HtmlBuilder;
 use tubalmartin\CssMin\Minifier;
 use Assetic\Asset\AssetCollection;
+use Leafo\ScssPhp\Compiler;
 use League\Flysystem\MountManager;
 use Illuminate\Filesystem\Filesystem;
 use Anomaly\Streams\Platform\Support\Template;
@@ -560,6 +561,13 @@ class Asset
          * of the asset collection.
          */
         $contents = $this->content($collection);
+
+        //scss fix
+        $type = explode('.', $collection);
+        if (end($type) == "scss") {
+            $compiler_scss = new Compiler();
+            $contents = $compiler_scss->compile($contents);
+        }
 
         /**
          * Parse the content. Always parse CSS.
