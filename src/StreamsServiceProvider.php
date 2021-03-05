@@ -407,7 +407,7 @@ class StreamsServiceProvider extends ServiceProvider
          */
         $this->app->instance(
             'streams.path',
-            $this->app->make('path.base') . '/vendor/anomaly/streams-platform'
+            $this->app->make('path.base') . '/vendor/visiosoft/streams-platform'
         );
 
         /*
