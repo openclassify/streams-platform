@@ -381,10 +381,12 @@ class EloquentQueryBuilder extends Builder
     public function select($columns = ['*'])
     {
         $columns = is_array($columns) ? $columns : func_get_args();
-
         $model = $this->getModel();
 
-        if (is_array($columns) && $model->getStream()->isTranslatable()) {
+        if (is_array($columns)
+            && method_exists($model,'getStream')
+            && $model->getStream()->isTranslatable()
+        ) {
 
             $translatableColumns = array_diff(
                 $this->getConnection()->getSchemaBuilder()->getColumnListing($model->getTranslationTableName()),
